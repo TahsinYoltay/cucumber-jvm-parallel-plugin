@@ -3,7 +3,7 @@ import cucumber.api.testng.AbstractTestNGCucumberTests;
 import org.testng.annotations.Test;
 import com.frameworkium.core.ui.tests.BaseTest;
 
-public class Master$className extends BaseTest {
+public class $className extends BaseTest {
 
     @Test
     @CucumberOptions(strict = $strict,
@@ -12,7 +12,7 @@ public class Master$className extends BaseTest {
     monochrome = ${monochrome},
     tags = {#if($tags)$tags#end},
     glue = { $glue })
-    public class $className extends AbstractTestNGCucumberTests {
+    public class test_$className extends AbstractTestNGCucumberTests {
     }
 
 }
