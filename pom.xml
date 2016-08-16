@@ -9,7 +9,7 @@
 
     <groupId>com.github.frameworkium</groupId>
     <artifactId>cucumber-jvm-parallel-plugin</artifactId>
-    <version>1.3.4</version>
+    <version>1.4.0</version>
     <packaging>maven-plugin</packaging>
 
     <name>cucumber-jvm-parallel-plugin Maven Plugin</name>

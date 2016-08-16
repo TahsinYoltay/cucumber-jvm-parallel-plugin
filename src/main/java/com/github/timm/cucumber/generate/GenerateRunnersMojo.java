@@ -129,6 +129,13 @@ public class GenerateRunnersMojo extends AbstractMojo implements FileGeneratorCo
     @Parameter(property = "namingPattern", required = false)
     private String namingPattern;
 
+    /**
+     * Custom VM file templating generated runner.
+     */
+    @Parameter(defaultValue = "", property = "customVmPath",
+            required = false)
+    private String customVmPath;
+
     private CucumberITGenerator fileGenerator;
 
     /**
@@ -211,5 +218,8 @@ public class GenerateRunnersMojo extends AbstractMojo implements FileGeneratorCo
         return namingPattern;
     }
 
+    public String getCustomVmPath() {
+        return customVmPath;
+    }
 
 }
