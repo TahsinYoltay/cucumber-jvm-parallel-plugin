@@ -15,6 +15,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
@@ -52,14 +54,27 @@ public class CucumberITGenerator {
     private void initTemplate() {
         final Properties props = new Properties();
 
+
+        ClassLoader cl = ClassLoader.getSystemClassLoader();
+        URL[] urls = ((URLClassLoader)cl).getURLs();
+        for(URL url: urls){
+            System.out.println(url.getFile());
+        }
+
+
         props.put(RuntimeConstants.RESOURCE_LOADER, "classpath");
         props.put("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
 
         props.put("resource.loader", "class");
         props.put("class.resource.loader.class",
                         "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+
+        System.out.print(props.values().toArray().toString());
+
+
         final VelocityEngine engine = new VelocityEngine(props);
         engine.init();
+
         if (config.getCustomVmPath() != "") {
             velocityTemplate =
                     engine.getTemplate(config.getCustomVmPath(), config.getEncoding());
