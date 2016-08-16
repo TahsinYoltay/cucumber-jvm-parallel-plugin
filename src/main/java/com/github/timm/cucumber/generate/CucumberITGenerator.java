@@ -49,6 +49,10 @@ public class CucumberITGenerator {
 
     private void initTemplate() {
         final Properties props = new Properties();
+
+        props.put(RuntimeConstants.RESOURCE_LOADER, "classpath");
+        props.put("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+
         props.put("resource.loader", "class");
         props.put("class.resource.loader.class",
                         "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
