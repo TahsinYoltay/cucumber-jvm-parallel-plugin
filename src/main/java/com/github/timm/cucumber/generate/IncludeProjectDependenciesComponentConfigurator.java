@@ -1,6 +1,8 @@
 package com.github.timm.cucumber.generate;
 
 import org.codehaus.classworlds.ClassRealm;
+import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.component.configurator.AbstractComponentConfigurator;
 import org.codehaus.plexus.component.configurator.ComponentConfigurationException;
 import org.codehaus.plexus.component.configurator.ConfigurationListener;
@@ -28,6 +30,8 @@ import java.util.List;
  * @plexus.requirement role="org.codehaus.plexus.component.configurator.converters.lookup.ConverterLookup"
  *                   role-hint="default"
  */
+@Component(role = org.codehaus.plexus.component.configurator.ComponentConfigurator.class,
+    hint = "include-project-dependencies")
 public class IncludeProjectDependenciesComponentConfigurator extends AbstractComponentConfigurator {
     /**
      * configures the component.
@@ -38,6 +42,8 @@ public class IncludeProjectDependenciesComponentConfigurator extends AbstractCom
      * @param listener
      * @throws ComponentConfigurationException
      */
+    @Requirement(role = org.codehaus.plexus.component.configurator.converters.lookup.ConverterLookup.class,
+        hint = "default")
     public void configureComponent(Object component, PlexusConfiguration configuration,
                                    ExpressionEvaluator expressionEvaluator, ClassRealm containerRealm,
                                    ConfigurationListener listener )
