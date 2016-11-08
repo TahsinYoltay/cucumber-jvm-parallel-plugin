@@ -13,7 +13,7 @@ public class TestFileGeneratorConfig implements FileGeneratorConfig {
     private final boolean useTestNg = false;
     private final String namingScheme = "simple";
     private final String namingPattern = null;
-    private final String customVmPath = null;
+    private final String customVmPath = "";
 
     public TestFileGeneratorConfig setFeaturesDirectory(final File directory) {
         this.featuresDirectory = directory;
