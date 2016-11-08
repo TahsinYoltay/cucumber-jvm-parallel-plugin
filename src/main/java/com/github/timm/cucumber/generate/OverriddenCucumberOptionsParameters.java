@@ -13,6 +13,7 @@ class OverriddenCucumberOptionsParameters {
     private boolean strict;
     private String format;
     private boolean monochrome;
+    private String customTemplate;
 
     public OverriddenCucumberOptionsParameters setTags(final String tags) {
         this.tags = tags;
@@ -89,4 +90,12 @@ class OverriddenCucumberOptionsParameters {
         return glue;
     }
 
+
+    public String getCustomTemplate() {
+        return customTemplate;
+    }
+
+    public void setCustomTemplate(final String customTemplate) {
+        this.customTemplate = customTemplate;
+    }
 }

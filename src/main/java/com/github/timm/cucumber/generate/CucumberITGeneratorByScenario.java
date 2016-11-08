@@ -2,6 +2,8 @@ package com.github.timm.cucumber.generate;
 
 import com.github.timm.cucumber.generate.filter.TagFilter;
 import com.github.timm.cucumber.generate.name.ClassNamingScheme;
+import com.github.timm.cucumber.generate.utils.PropertiesBuilder;
+import com.github.timm.cucumber.generate.utils.VelocityTemplateBuilder;
 import gherkin.AstBuilder;
 import gherkin.Parser;
 import gherkin.TokenMatcher;
@@ -9,10 +11,10 @@ import gherkin.ast.Feature;
 import gherkin.ast.Location;
 import gherkin.ast.Node;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,7 +23,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Collection;
-import java.util.Properties;
 
 /**
  * Generates Cucumber runner files using configuration from FileGeneratorConfig containing parameters passed into the
@@ -54,21 +55,10 @@ public class CucumberITGeneratorByScenario implements CucumberITGenerator {
     }
 
     private void initTemplate() {
-        final Properties props = new Properties();
-        props.put("resource.loader", "class");
-        props.put("class.resource.loader.class",
-                        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
-        final VelocityEngine engine = new VelocityEngine(props);
-        engine.init();
-        if (config.getCustomVmPath() != "") {
-            velocityTemplate =
-                    engine.getTemplate(config.getCustomVmPath(), config.getEncoding());
-        } else if (config.useTestNG()) {
-            velocityTemplate =
-                            engine.getTemplate("cucumber-testng-runner.vm", config.getEncoding());
-        } else {
-            velocityTemplate = engine.getTemplate("cucumber-junit-runner.vm", config.getEncoding());
-        }
+        String template = StringUtils.defaultIfEmpty(
+                overriddenParameters.getCustomTemplate(),config.templateType().getTemplate());
+        velocityTemplate = VelocityTemplateBuilder.build(
+                new PropertiesBuilder().withDefaults().build(), template, config.getEncoding());
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.github.timm.cucumber.generate;
 
+import com.github.timm.cucumber.generate.types.TemplateType;
 import org.apache.maven.plugin.logging.Log;
 
 import java.io.File;
@@ -63,8 +64,8 @@ public class TestFileGeneratorConfig implements FileGeneratorConfig {
         return this;
     }
 
-    public String getCustomVmPath() {
-        return customVmPath;
-    }
 
+    public TemplateType templateType() {
+        return TemplateType.JUNIT;
+    }
 }

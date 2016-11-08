@@ -16,6 +16,7 @@ package com.github.timm.cucumber.generate;
 import com.github.timm.cucumber.generate.name.ClassNamingScheme;
 import com.github.timm.cucumber.generate.name.ClassNamingSchemeFactory;
 import com.github.timm.cucumber.generate.name.OneUpCounter;
+import com.github.timm.cucumber.generate.types.TemplateType;
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -29,6 +30,8 @@ import java.util.Collection;
 
 /**
  * Goal which generates a Cucumber JUnit runner for each Gherkin feature file in your project.
+ * @requiresDependencyResolution
+ * @configurator include-project-dependencies
  */
 @Mojo(name = "generateRunners", defaultPhase = LifecyclePhase.GENERATE_TEST_SOURCES)
 public class GenerateRunnersMojo extends AbstractMojo implements FileGeneratorConfig {
@@ -122,19 +125,14 @@ public class GenerateRunnersMojo extends AbstractMojo implements FileGeneratorCo
      */
     @Parameter(property = "cucumber.options", required = false)
     private String cucumberOptions;
+    @Parameter(property = "cucumber.template", required = false)
+    private String customCucumberTemplate;
 
     @Parameter(defaultValue = "simple", property = "namingScheme", required = false)
     private String namingScheme;
 
     @Parameter(property = "namingPattern", required = false)
     private String namingPattern;
-
-    /**
-=     * Custom VM file templating generated runner.
-     */
-    @Parameter(defaultValue = "", property = "customVmPath",
-            required = false)
-    private String customVmPath;
 
     /**
      * The scheme to use when generating runner. Valid values are:
@@ -147,6 +145,9 @@ public class GenerateRunnersMojo extends AbstractMojo implements FileGeneratorCo
      */
     @Parameter(defaultValue = "FEATURE", property = "parallelScheme", required = true)
     private ParallelScheme parallelScheme;
+
+    @Parameter(defaultValue = "JUNIT", property = "templateType", required = true)
+    private TemplateType templateType;
 
     private CucumberITGenerator fileGenerator;
 
@@ -199,7 +200,8 @@ public class GenerateRunnersMojo extends AbstractMojo implements FileGeneratorCo
         final OverriddenCucumberOptionsParameters overriddenParameters =
                         new OverriddenCucumberOptionsParameters();
         overriddenParameters.setTags(this.tags).setGlue(this.glue).setStrict(this.strict)
-                        .setFormat(this.format).setMonochrome(this.monochrome);
+                        .setFormat(this.format).setMonochrome(this.monochrome)
+                            .setCustomTemplate(customCucumberTemplate);
 
         overriddenParameters.overrideParametersWithCucumberOptions(cucumberOptions);
 
@@ -227,16 +229,18 @@ public class GenerateRunnersMojo extends AbstractMojo implements FileGeneratorCo
         return useTestNG;
     }
 
+
+    public TemplateType templateType() {
+        return templateType;
+    }
+
+
     public String getNamingScheme() {
         return namingScheme;
     }
 
     public String getNamingPattern() {
         return namingPattern;
-    }
-
-    public String getCustomVmPath() {
-        return customVmPath;
     }
 
 }
