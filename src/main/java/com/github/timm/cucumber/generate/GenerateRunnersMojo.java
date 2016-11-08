@@ -23,6 +23,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 
 import java.io.File;
@@ -30,10 +31,11 @@ import java.util.Collection;
 
 /**
  * Goal which generates a Cucumber JUnit runner for each Gherkin feature file in your project.
- * @requiresDependencyResolution
+ * @requiresDependencyResolution compile+runtime
  * @configurator include-project-dependencies
  */
-@Mojo(name = "generateRunners", defaultPhase = LifecyclePhase.GENERATE_TEST_SOURCES)
+@Mojo(name = "generateRunners", defaultPhase = LifecyclePhase.GENERATE_TEST_SOURCES,
+    configurator = "include-project-dependencies",requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
 public class GenerateRunnersMojo extends AbstractMojo implements FileGeneratorConfig {
 
     /**
