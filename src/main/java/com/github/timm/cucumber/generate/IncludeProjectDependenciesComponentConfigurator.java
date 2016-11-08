@@ -46,6 +46,7 @@ public class IncludeProjectDependenciesComponentConfigurator extends AbstractCom
                                    ConfigurationListener listener )
         throws ComponentConfigurationException {
 
+        System.out.println("executing include project dependencies");
         addProjectDependenciesToClassRealm(expressionEvaluator, containerRealm);
 
         converterLookup.registerConverter( new ClassRealmConverter(containerRealm ) );
