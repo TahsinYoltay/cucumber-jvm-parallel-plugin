@@ -65,8 +65,7 @@ public class CucumberITGeneratorByFeature implements CucumberITGenerator {
         if (config.getCustomVmPath() != "") {
             velocityTemplate =
                     engine.getTemplate(config.getCustomVmPath(), config.getEncoding());
-        }
-        else if (config.useTestNG()) {
+        } else if (config.useTestNG()) {
             velocityTemplate =
                             engine.getTemplate("cucumber-testng-runner.vm", config.getEncoding());
         } else {
